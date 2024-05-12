@@ -1,0 +1,34 @@
+services:
+  backend:
+    build: ./modules/services/classroom-backend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend-db
+    environment:
+      - DATABASE_HOST=backend-db
+      - DATABASE_PORT=5432
+      - DATABASE_USERNAME=classroom
+      - DATABASE_PASSWORD=classroom
+      - DATABASE_NAME=classroom
+
+  backend-db:
+    image: postgres:14-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - .data/backend-db/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=classroom
+      - POSTGRES_USER=classroom
+      - POSTGRES_DB=classroom
+
+  admin:
+    build:
+      context: ./modules/apps/classroom-admin-web
+      args:
+        - API_BASE_URL=http://backend:3000/api
+    ports:
+      - "8081:8081"
+    depends_on:
+      - backend
