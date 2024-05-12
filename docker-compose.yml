@@ -2,7 +2,7 @@ services:
   backend:
     build: ./modules/services/classroom-backend
     ports:
-      - "3000:3000"
+      - 3001:3001
     depends_on:
       - backend-db
     environment:
@@ -27,8 +27,17 @@ services:
     build:
       context: ./modules/apps/classroom-admin-web
       args:
-        - API_BASE_URL=http://backend:3000/api
+        - HOST_BASE_URL=/admin
+        - API_BASE_URL=http://localhost:8000/api
     ports:
-      - "8081:8081"
+      - 8001:8001
     depends_on:
       - backend
+
+  gateway:
+    build: ./modules/services/classroom-gateway
+    ports:
+      - "8000:8000"
+    depends_on:
+      - backend
+      - admin

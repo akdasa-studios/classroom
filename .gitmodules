@@ -4,3 +4,6 @@
 [submodule "classroom-admin-web"]
 	path = modules/apps/classroom-admin-web
 	url = git@github.com:akdasa-studios/classroom-admin.git
+[submodule "classroom-gateway"]
+	path = modules/services/classroom-gateway
+	url = git@github.com:akdasa-studios/classroom-gateway.git
