@@ -38,6 +38,8 @@ services:
     build: ./modules/services/classroom-gateway
     ports:
       - "8000:8000"
+    volumes:
+      - ./data/gateway:/app/classroom
     depends_on:
       - backend
       - admin
